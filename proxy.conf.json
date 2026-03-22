@@ -1,0 +1,8 @@
+{
+  "/": {
+    "target": "//64.23.168.149:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

@@ -1,0 +1,211 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="page-breadcrumb">
+                <div class="d-md-flex align-items-center justify-content-between">
+                    <h3 class="page-title">Registro de clientes</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Componente</a></li>
+                            <li class="breadcrumb-item active">Clientes</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- INE Capture Section -->
+                        <app-capture-id *ngIf="!isFormVisible" (onIneProcessed)="handleIneProcessed($event)"></app-capture-id>
+                        
+                        <p-divider *ngIf="!isFormVisible"></p-divider>
+
+                        <button pButton label="Capturación manual" class="p-button-info" *ngIf="!isFormVisible && !loading" (click)="showFormManually()" icon="bi bi-card-text"></button>
+            
+                        <!-- New Client Form -->
+                        <div *ngIf="isFormVisible">
+                            <div class="card mt-4">
+                                <div class="card-body">
+                                    <!-- Checkbox para activar el relleno automático -->
+                                    <!-- <div class="mb-3">
+                                        <input type="checkbox" id="autoFillCheck" [(ngModel)]="autoFillEnabled">
+                                        &nbsp;
+                                        <label for="autoFillCheck">Relleno automático en base capturación de CURP</label>
+                                    </div> -->
+                        
+                                    <form [formGroup]="form" (submit)="submit()">
+                                        <div class="row">
+                                            <!-- Full Width Column: Form -->
+                                            <div class="col-md-12">
+                                                <!-- CURP Field with change event -->
+                                                <div class="mb-3">
+                                                    <label for="curp" class="col-form-label required">CURP</label>
+                                                    <input type="text" class="form-control" formControlName="curp" id="curp" placeholder="Ingrese el CURP del cliente" (change)="onCurpChange()">
+                                                
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.curp.touched && form.controls.curp.hasError('required')">
+                                                            CURP es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="nombre" class="col-form-label required">Nombre</label>
+                                                    <input type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ej. Juan Francisco">
+                        
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.nombre.touched && form.controls.nombre.hasError('required')">
+                                                            Nombre es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="paterno" class="col-form-label required">Apellido paterno</label>
+                                                    <input type="text" class="form-control" formControlName="paterno" id="paterno" placeholder="Ej. Pérez">
+                        
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.paterno.touched && form.controls.paterno.hasError('required')">
+                                                            Apellido paterno es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="materno" class="col-form-label required">Apellido materno</label>
+                                                    <input type="text" class="form-control" formControlName="materno" id="materno" placeholder="Ej. Galindo">
+                        
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.materno.touched && form.controls.materno.hasError('required')">
+                                                            Apellido materno es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="correo_electronico" class="col-form-label required">Correo electrónico</label>
+                                                    <input type="text" class="form-control" formControlName="correo_electronico" id="correo_electronico" placeholder="Ingrese un correo electrónico">
+                        
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.correo_electronico.touched && form.controls.correo_electronico.hasError('required')">
+                                                            Correo electrónico es requerido
+                                                        </div>
+                        
+                                                        <div *ngIf="form.controls.correo_electronico.dirty && form.controls.correo_electronico.errors">
+                                                            Correo electrónico inválido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="telefono" class="col-form-label required">Teléfono</label>
+                                                    <input type="number" class="form-control" formControlName="telefono" id="telefono" placeholder="Ingrese un número de teléfono">
+                        
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.telefono.touched && form.controls.telefono.hasError('required')">
+                                                            Teléfono es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="telefono_alternativo" class="col-form-label">Teléfono alternativo</label>
+                                                    <input type="number" class="form-control" formControlName="telefono_alternativo" id="telefono_alternativo" placeholder="Ingrese un número de teléfono alternativo">
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="fecha_nacimiento" class="col-form-label required">Fecha de nacimiento</label>
+                                                    <input type="date" class="form-control" formControlName="fecha_nacimiento" id="fecha_nacimiento">
+                                                
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.fecha_nacimiento.touched && form.controls.fecha_nacimiento.hasError('required')">
+                                                            Fecha de nacimiento es requerido
+                                                        </div>
+                        
+                                                        <div *ngIf="form.controls.fecha_nacimiento.dirty && form.controls.fecha_nacimiento.errors">
+                                                            Fecha de nacimiento inválida
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="cic" class="col-form-label required">CIC (Código de Identificación de Credencial)</label>
+                                                    &nbsp;
+                                                    <button type="button" class="btn btn-link p-0" (click)="showDialog()">Ver cómo</button>
+                                                    <input type="number" class="form-control" formControlName="cic" id="cic" placeholder="Ingrese el CIC del cliente">
+                                                
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.cic.touched && form.controls.cic.hasError('required')">
+                                                            CIC es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="identificadorCiudadano" class="col-form-label required">Identificador ciudadano</label>
+                                                    <input type="number" class="form-control" formControlName="identificadorCiudadano" id="identificadorCiudadano" placeholder="Ingrese el identificador ciudadano del cliente">
+                                                
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.identificadorCiudadano.touched && form.controls.identificadorCiudadano.hasError('required')">
+                                                            Identificador ciudadano es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="mb-3">
+                                                    <label for="genero" class="col-form-label required">Género</label>
+                                                    <select class="form-select" formControlName="genero" id="genero">
+                                                        <option value="" disabled selected>Seleccione...</option>
+                                                        <option value="M">Masculino -  (M)</option>
+                                                        <option value="F">Femenino  -  (F)</option>
+                                                    </select>
+                        
+                                                    <div class="fv-plugins-message-container invalid-feedback">
+                                                        <div *ngIf="form.controls.genero.touched && form.controls.genero.hasError('required')">
+                                                            Género es requerido
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <p-divider></p-divider>
+                        
+                                        <div class="row mt-4">
+                                            <div class="col-12 text-end">
+                                                <button pButton
+                                                    label="Regresar a capturación automática" 
+                                                    class="p-button-info me-2" 
+                                                    (click)="resetToIneCapture()" 
+                                                    icon="bi bi-arrow-left" 
+                                                    *ngIf="!isUpdateMode">
+                                                </button>
+                                                <button pButton label="Descartar" class="p-button-secondary me-2" routerLink="/component/clientes/list"></button>
+                                                <button pButton label="Guardar" class="p-button-success" icon="bi bi-save"></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loader flotante -->
+<div *ngIf="loading" class="overlay">
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <p>Validando datos, por favor espere...</p>
+    </div>
+</div>
+
+<!-- Modal -->
+<p-dialog header="Ejemplo de CIC" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [closable]="true" [contentStyle]="{'text-align': 'center'}">
+    <img src="../../../../assets/images/cic.png" alt="Ejemplo de CIC" class="img-fluid centered-image">
+</p-dialog>

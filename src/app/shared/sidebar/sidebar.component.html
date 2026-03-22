@@ -1,0 +1,39 @@
+<nav class="sidebar-nav">
+  <ul id="sidebarnav" class="menuleft">
+    <li class="sidebar-item" *ngFor="let sidebarnavItem of sidebarnavItems"
+      [class.active]="showMenu === sidebarnavItem.title || isSubmenuActive(sidebarnavItem)">
+      <div class="nav-small-cap" *ngIf="sidebarnavItem.extralink === true && sidebarnavItem.role">
+        {{sidebarnavItem.title}}</div>
+      
+        <ng-container *ngIf="sidebarnavItem.path !== ''; else noPath">
+        <a class="sidebar-link waves-effect waves-dark menuleft" [routerLink]="[sidebarnavItem.path]"
+          [ngClass]="[sidebarnavItem.class]" [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">
+          <i [ngClass]="[sidebarnavItem.icon]"></i>
+          <span class="hide-menu">{{sidebarnavItem.title}}</span>
+          <i *ngIf="sidebarnavItem.submenu.length > 0" class="bi bi-chevron-down"></i>
+        </a>
+      </ng-container>
+
+      <ng-template #noPath>
+        <a class="sidebar-link waves-effect waves-dark menuleft" (click)="toggleSubmenu(sidebarnavItem.title)">
+          <i [ngClass]="[sidebarnavItem.icon]"></i>
+          <span class="hide-menu">{{sidebarnavItem.title}}</span>
+          <i *ngIf="sidebarnavItem.submenu.length > 0" class="bi bi-chevron-down"></i>
+        </a>
+      </ng-template>
+
+      <ul
+        *ngIf="sidebarnavItem.submenu.length > 0 && (showMenu === sidebarnavItem.title || isSubmenuActive(sidebarnavItem))"
+        class="submenu">
+        <li *ngFor="let subItem of sidebarnavItem.submenu" class="sidebar-item"
+          [class.active]="isSubmenuActive(subItem)">
+          <a class="sidebar-link waves-effect waves-dark menuleft" [routerLink]="[subItem.path]"
+            [ngClass]="[subItem.class]" [routerLinkActive]="subItem.submenu.length != 0 ? '' : 'active'">
+            <i [ngClass]="[subItem.icon]"></i>
+            <span class="hide-menu">{{subItem.title}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

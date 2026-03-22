@@ -1,0 +1,52 @@
+<!-- ============================================================== -->
+<!-- toggle and nav items -->
+<!-- ============================================================== -->
+<ul class="navbar-nav float-start me-auto">
+  
+
+  <!-- ============================================================== -->
+  <!-- create new -->
+  <!-- ============================================================== -->
+  <!-- <li class="nav-item d-none d-md-block" ngbDropdown placement="bottom-end">
+    <a
+      ngbDropdownToggle
+      class="nav-link waves-effect waves-dark"
+      href="javascript:void(0)"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span>Acciones rápidas</span>
+    </a>
+    <div ngbDropdownMenu>
+      <a class="dropdown-item" href="#">Gestión de riesgos</a>
+      <a class="dropdown-item" href="#">Generar alerta de riesgo</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Control de calidad</a>
+    </div>
+  </li> -->
+  <span class="mx-4 fw-bold font-weight-bold fs-3 bi-clock-fill date-time">  {{ currentTime }}</span>
+</ul>
+
+<ul class="navbar-nav d-flex mx-4 justify-content-end">
+  <li class="nav-item dropdown" placement="bottom-end">
+    <div class="ms-auto user" (click)="toggleDropdown()">
+      <img src="../../../assets/images/users/profile.png" alt="user" class="rounded-circle" width="30" />
+      <span class="ms-2" style="color: rgb(0, 0, 0);"> {{ auth.user.name }} </span>
+    </div>
+    
+<!--     UNO ES PARA MOVIL Y EL OTRO ES PARA ESCRITORIO-->    
+     <div id="myDropdown" class="dropdown-content">
+      <div class="text-start">
+        <a class="dropdown-item text-end" href="/logout">Cerrar sesión </a>
+      </div>
+    </div>
+    
+  </li>
+</ul>
+
+<div class="d-flex navbar-nav justify-content-end">
+  <div class="dropdown-menu-right logout-menu">
+    <a class="dropdown-item mx-0" href="/logout">Cerrar sesión </a>
+  </div>
+</div>

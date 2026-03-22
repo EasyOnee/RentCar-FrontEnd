@@ -1,0 +1,36 @@
+.result-box {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.result-image {
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.result-content {
+    flex-grow: 1;
+}
+
+.result-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.result-content li {
+    margin-bottom: 10px;
+}
+
+.result-check {
+    font-size: 48px;
+    color: green;
+    margin-left: 20px;
+}

@@ -1,0 +1,104 @@
+.table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+    overflow-x: auto;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.page-breadcrumb .breadcrumb {
+    margin-bottom: 0;
+    background-color: transparent;
+}
+
+.page-title {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.card {
+    margin-bottom: 20px;
+  }
+
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .form-group {
+    flex: 1;
+    min-width: 100px; /* Ajustado para acomodar más elementos en pantalla */
+    margin-bottom: 10px;
+  }
+  
+  label {
+    font-size: 0.85rem; /* Tamaño de fuente reducido */
+    margin-bottom: 5px;
+  }
+  
+  input, select {
+    font-size: 0.85rem; /* Tamaño de fuente reducido */
+    padding: 5px;
+  }
+  
+  .time-container {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+  }
+  
+  .time-input {
+    width: 40px;
+    padding: 5px;
+  }
+  
+  .ampm-select {
+    width: 50px;
+    padding: 5px;
+  }
+  
+  .result-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .result-item {
+    text-align: center;
+  }
+  
+  .result-item label {
+    font-size: 0.9rem;
+    color: #c00;
+    display: block;
+  }
+  
+  .result-item span {
+    font-size: 1.5rem;
+    color: #003366;
+  }
+  

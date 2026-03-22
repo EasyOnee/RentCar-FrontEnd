@@ -1,0 +1,198 @@
+<!-- Formulario de Filtro -->
+<div class="container mt-4" *ngIf="reporte">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-breadcrumb">
+                <h3 class="page-title">Generar Reportes</h3>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0">Reportes</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Integración del FormGroup -->
+                    <form [formGroup]="formReporte" (ngSubmit)="filtrarReservasPorFecha()">
+                        <div class="row mb-3">
+                            <label class="col-lg-2 col-form-label">Desde:</label>
+                            <div class="col-lg-4">
+                                <input type="date" formControlName="startDate" class="form-control" />
+                            </div>
+                            <label class="col-lg-2 col-form-label">Hasta:</label>
+                            <div class="col-lg-4">
+                                <input type="date" formControlName="endDate" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Generar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="report-header" *ngIf="!reporte">
+    <!-- Botones de acción -->
+    <div class="d-flex justify-content-between mb-3">
+        <button class="btn btn-danger btn-lg px-4 py-2 fw-bold shadow esti" (click)="limpiarDatosReporte()">
+            Salir
+        </button>
+
+        <button class="btn btn-success btn-lg px-4 py-2 fw-bold shadow esti" (click)="descargarPDF()">
+            Descargar PDF
+        </button>
+    </div>
+</div>
+
+<div id="reporte-content" *ngIf="!reporte">
+    <!-- Título del reporte -->
+    <div>
+        <h1 class="text-center estiReporte">REPORTE GENERAL</h1>
+        <p class="text-center">
+            <strong>Desde: {{ displayStartDate }} Hasta: {{ displayEndDate }}</strong>
+          </p>
+        </div>
+
+    <div class="row">
+        <!-- Resumen de Operaciones -->
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header text-center fw-bold">Total de Finalizadas</div>
+                <div class="card-body">
+                    <p class="fw-bold ingresostyle display-4 text-center">{{ totalEntregas }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ingresos Totales -->
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header text-center fw-bold">Ingreso Total</div>
+                <div class="card-body">
+                    <p class="fw-bold ingresostyle display-4 text-center">{{ ingresosTotales | currency:'MXN' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Reservas -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="fw-bold">Lista de Reservas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Registro</th>
+                                    <th>Folio</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Salida</th>
+                                    <th>Llegada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let reserva of reservas">
+                                    <td style="max-width: 150px;">{{ reserva.cliente }}</td>
+                                    <td>{{ reserva.createdAt | date:'dd/MM/yyyy' }}</td>
+                                    <td>
+                                        <span class="badge bg-warning text-dark">
+                                            <strong>{{ reserva.folio }}</strong>
+                                        </span>
+                                    </td>
+                                    <td>{{ reserva.tipo_transaccion }}</td>
+                                    <td>
+                                        <span class="p-1 text-white" [ngClass]="{
+                                            'badge bg-success': reserva.estado === 'FINALIZADA'
+                                          }">
+                                            <strong>{{ reserva.estado }}</strong>
+                                        </span>
+                                    </td>
+                                    <td>{{ reserva.fecha_salida | date:'dd/MM/yyyy hh:mm:ss a' }}</td>
+                                    <td>{{ reserva.fecha_llegada | date:'dd/MM/yyyy hh:mm:ss a' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Resumen de Clientes -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="fw-bold">Resumen de Clientes</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Reservaciones Finalizadas</th>
+                                <th>Ingreso Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cliente of clientesData">
+                                <td>{{ cliente.nombre }}</td>
+                                <td>{{ cliente.totalFinalizadas }}</td>
+                                <td>{{ cliente.sumaFinalizadas | currency:'MXN' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desempeño de Vehículos -->
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header text-center fw-bold">Desempeño de Vehículos</div>
+                <div class="card-body mb-4">
+                    <p-chart type="doughnut" [data]="dataVehiculos" [options]="chartOptions"></p-chart>
+                </div>
+                <div class="footer">
+                    <p>Muestra los top 5 vehiculos más rentados de las reservas filtradas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reporte de Clientes y Gráfica de Ingresos y Egresos -->
+        <div class="col-12 col-lg-6 d-flex flex-column mb-4">
+            <div class="card mb-2">
+                <div class="card-header text-center fw-bold">Reporte de Clientes</div>
+                <div class="card-body p-3">
+                    <p-chart type="bar" [data]="dataClientesStacked" [options]="stackedOptions"></p-chart>
+                </div>
+                <div class="footer">
+                    <p>Muestra los top 5 Clientes con más ingresos de las reservas filtradas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Diálogo de Progreso -->
+<p-dialog header="Generando Reporte" [(visible)]="dialogVisible" [modal]="true" [closable]="false" [resizable]="false"
+    [draggable]="false" [baseZIndex]="10000" [style]="{width: '400px'}" appendTo="body" backdropClass="dialog-backdrop-blur">
+    
+    <div class="p-mb-3 text-center">
+        <p-progressBar [value]="progressValue" [showValue]="true" mode="determinate" [style]="{height: '20px'}">
+        </p-progressBar>
+    </div>
+
+    <div class="text-center p-mt-3">
+        <p *ngIf="progressValue <= 40">Obteniendo detalles</p>
+        <p *ngIf="progressValue > 40 && progressValue < 70">Extrayendo información</p>
+        <p *ngIf="progressValue >= 70">Creando reporte</p>
+        <p *ngIf="progressValue === 100 && reservas.length === 0" class="text-danger">
+            No se encontraron datos para el rango de fechas seleccionado.
+        </p>
+    </div>
+</p-dialog>

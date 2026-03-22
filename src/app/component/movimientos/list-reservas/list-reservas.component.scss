@@ -1,0 +1,39 @@
+.pendiente {
+    background-color: #f3f6ae;
+    /* Color tenue para pendiente */
+}
+
+.activa {
+    background-color: #e0f7fa;
+    /* Color tenue para activa */
+}
+
+.activa-dot {
+    background-color: #4dbdcc;
+    /* Color tenue para activa */
+}
+
+.finalizada {
+    background-color: #dcedc8;
+    /* Verde claro para finalizada */
+}
+
+.cancelada {
+    background-color: #ffcdd2;
+    /* Rojo claro para cancelada */
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+

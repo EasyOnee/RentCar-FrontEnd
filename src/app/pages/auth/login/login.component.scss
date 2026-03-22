@@ -1,0 +1,95 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../../assets/images/logos/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.5) grayscale(0.2); /* Aplica un filtro de brillo y escala de grises */
+    z-index: -1; /* Asegura que esté detrás de otros elementos */
+  }
+  
+  .backdrop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Superposición oscura para mejorar el contraste */
+  }
+  
+  .auth-wrapper {
+    position: relative;
+    z-index: 1; /* Asegura que esté por encima del fondo */
+  }
+  
+  .auth-box {
+    background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #loginform {
+    color: #333;
+  }
+  
+  input.form-control {
+    border-radius: 5px;
+  }
+  
+  button.btn {
+    background-color: #0056b3; /* Un azul más profesional */
+    border: none;
+  }
+  
+  button.btn:hover {
+    background-color: #004494; /* Azul más oscuro al pasar el ratón */
+  }
+  
+  .rotating-text {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+  
+  .rotating-text span {
+    color: #0056b3;
+  }
+  
+  .fade-in-out {
+    animation: fadeInOut 1.9s ease-in-out;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+
+  @media (max-width: 1200px) {
+    .rotating-text {
+      font-size: 3em; /* Ajuste para pantallas grandes (hasta 1200px) */
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .rotating-text {
+      font-size: 2.5em; /* Ajuste para pantallas medianas (hasta 992px) */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .rotating-text {
+      font-size: 2em; /* Ajuste para pantallas pequeñas (hasta 768px) */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .rotating-text {
+      font-size: 1.5em; /* Ajuste para pantallas muy pequeñas (hasta 576px) */
+    }
+  }

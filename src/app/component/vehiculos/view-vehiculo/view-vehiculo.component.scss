@@ -1,0 +1,151 @@
+.container {
+    max-width: 100%;
+}
+
+.card {
+    border-radius: 8px; /* Añade un borde redondeado suave */
+}
+
+h2, h1 {
+    margin-bottom: 10px; /* Espaciado consistente */
+}
+
+.border-bottom {
+    border-color: #e2e8f0; /* Ajusta el color de la línea separadora */
+}
+
+.v-line {
+    border-left: 2px solid #ddd;
+    height: 100%;
+}
+
+.img-min {
+    width: 124px;
+    height: 124px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-color: #e2e8f0;
+    border-radius: 18px;
+    border-style: solid;
+    border-width: 1px;
+    opacity: 1;
+}
+
+.img-min img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vehicle-details {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.vehicle-details .icon {
+    margin-right: 5px;
+}
+
+.vehicle-details .status {
+    margin-left: 10px;
+}
+
+.document-card {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 100%;
+    position: relative;
+  
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    img {
+      max-height: 120px;
+      object-fit: contain;
+      margin: auto;
+      display: block;
+    }
+  
+    .card-title {
+      font-size: 0.85rem;
+      margin-top: 10px;
+      color: #333;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+  
+    .dropdown {
+      position: absolute;
+      top: 10px; /* Ajusta según sea necesario */
+      right: 10px; /* Alinea a la derecha */
+    }
+  }
+
+  .table-responsive {
+    border-radius: 8px; /* Bordes redondeados para el contenedor */
+  }
+  
+  .table {
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  .table th, .table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  
+  .table thead th {
+    background-color: #f8f9fa; /* Color de fondo claro para el encabezado */
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f3f4f6; /* Color de fondo para filas impares */
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #e2e8f0; /* Color de fondo para fila en hover */
+  }
+  
+  .table td {
+    border-top: 1px solid #e2e8f0;
+  }
+  
+  .table-responsive {
+    max-height: 400px; /* Altura máxima con scroll */
+    overflow-y: auto;
+  }
+
+  .spanPaginado {
+    white-space: nowrap;
+  }
+  
+  @media (max-width: 768px) {
+    .table th, .table td {
+      padding: 8px;
+      font-size: 0.85rem;
+    }
+  }                                                                                                                
+  
+  
+  

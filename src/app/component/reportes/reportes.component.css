@@ -1,0 +1,82 @@
+.card {
+    margin-bottom: 20px;
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  
+  p-chart {
+    display: block;
+    max-width: 150%;
+    height: auto;
+  }
+
+  .esti{
+    letter-spacing: 1px;
+  }
+
+  .estiReporte {
+    letter-spacing: 2px; /* Ajuste más sutil del espaciado de letras */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Fuente profesional */
+    font-size: 30px; /* Tamaño de fuente más grande */
+    font-weight: bold; /* Negrita para mayor énfasis */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas para un look más fuerte */
+    color: #333; /* Color de texto más oscuro */
+    text-align: center; /* Centra el texto */
+    margin: 20px 0; /* Espaciado superior e inferior */
+    padding: 10px; /* Añade padding interno */
+    border-bottom: 2px solid #ccc; /* Línea inferior para darle un toque de separación */
+  }
+
+  /* Diseño de la tarjeta */
+.cardIngreso {
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+  overflow: hidden; /* Evita que el contenido salga del borde */
+  background-color: #f8f9fa; /* Color de fondo claro */
+  text-align: center; /* Centra el texto */
+  padding: 20px; /* Espaciado interno */
+}
+
+.card-header {
+  font-size: 1.2rem; /* Tamaño de fuente del título */
+  font-weight: bold; /* Texto en negrita */
+  color: #37474f; /* Color del texto */
+  margin-bottom: 10px; /* Espaciado inferior */
+}
+
+.card-subtitle {
+  font-size: 0.9rem; /* Tamaño de fuente de subtítulo */
+  color: #6c757d; /* Color gris */
+  margin-bottom: 5px; /* Espaciado inferior */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.card-price {
+  font-size: 2rem; /* Tamaño de fuente del precio */
+  font-weight: bold; /* Texto en negrita */
+  color: #37474f; /* Color del precio */
+}
+
+.ingresostyle {
+  font-size: 2.5rem; /* Tamaño de fuente del precio */
+  font-weight: bold; /* Texto en negrita */
+}
+
+/* styles.css o el archivo de estilos global */
+.dialog-backdrop-blur {
+  backdrop-filter: blur(5px); /* Ajusta el nivel de difuminación según prefieras */
+
+}
+
+  
+  @media (max-width: 992px) {
+    .col-lg-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+  

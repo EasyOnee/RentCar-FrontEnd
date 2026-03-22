@@ -1,0 +1,49 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="page-breadcrumb">
+                <div class="d-md-flex align-items-center justify-content-between">
+                    <h3 class="page-title">Registro de tipos de vehículos</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Componente</a></li>
+                            <li class="breadcrumb-item active">Tipos</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <form [formGroup]="form" (submit)="submit()">
+                        <div class="row">
+                            <!-- Full Width Column: Form -->
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="nombre" class="col-form-label required">Nombre</label>
+                                    <input type="text" class="form-control" formControlName="nombre" id="nombre" placeholder="Ej. Pickup">
+
+                                    <div class="fv-plugins-message-container invalid-feedback">
+                                        <div *ngIf="form.controls.nombre.touched && form.controls.nombre.hasError('required')">
+                                            Nombre es requerido
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p-divider></p-divider>
+
+                        <div class="row mt-4">
+                            <div class="col-12 text-end">
+                                <button pButton label="Descartar" class="p-button-secondary me-2" routerLink="/component/vehiculos/tipos/list"></button>
+                                <button pButton label="Guardar" class="p-button-primary" icon="bi bi-save"></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

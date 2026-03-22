@@ -1,0 +1,89 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="page-breadcrumb">
+                <div class="d-md-flex align-items-center justify-content-between">
+                    <h3 class="page-title">Listado de tipos de vehículos</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Componente</a></li>
+                            <li class="breadcrumb-item active">Tipos</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Toolbar -->
+                        <p-toolbar class="mb-4 gap-2">
+                            <ng-template pTemplate="left">
+                                <button pButton label="Añadir nuevo" icon="bi bi-plus" class="p-button-success me-2" routerLink="/component/vehiculos/tipos/new"></button>
+                            </ng-template>
+                            
+                            <ng-template pTemplate="right">
+                                <button pButton pRipple label="Exportar CSV" icon="bi bi-download" class="p-button-info" pTooltip="CSV"></button>
+                            </ng-template>
+                        </p-toolbar>
+                        
+                        <!-- Table -->
+                        <p-table #dt [columns]="cols" [value]="results" [paginator]="true" [rows]="10" [rowHover]="true" [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
+                          <!-- Table Caption -->
+                          <ng-template pTemplate="caption">
+                            <div class="d-flex align-items-center justify-content-between">
+                              <div class="input-group">
+                                  <span class="input-group-text">
+                                      <i class="bi bi-search"></i>
+                                  </span>
+                        
+                                  <input type="text" class="form-control" placeholder="Buscar..." (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                              </div>
+                            </div>
+                          </ng-template>
+                        
+                          <!-- Table Header -->
+                          <ng-template pTemplate="header" let-columns>
+                            <tr class="text-start text-muted fw-bolder fs-8 text-uppercase gs-0">
+                              <th>
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                              </th>
+                              <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
+                                {{ col.header }} <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+                              </th>
+                              <th>Acciones</th>
+                            </tr>
+                          </ng-template>
+                        
+                          <!-- Table Body -->
+                          <ng-template pTemplate="body" let-result let-index="rowIndex">
+                            <tr class="odd" [pSelectableRow]="result.id">
+                              <td>
+                                <p-tableCheckbox [value]="result"></p-tableCheckbox>
+                              </td>
+                              <td>{{ result.nombre }}</td>
+                              <td>{{ result.createdAt }}</td>
+                              <td>{{ result.updatedAt }}</td>
+                              <td>
+                                  <div class="btn-group">
+                                    <button pButton pRipple icon="bi bi-pencil" class="p-button-rounded p-button-help me-2" routerLink="/component/vehiculos/tipos/update/{{ result.id }}"></button>
+                                    <button pButton pRipple icon="bi bi-trash" class="p-button-rounded p-button-danger" (click)="confirmDelete(result)"></button>
+                                  </div>
+                              </td>
+                            </tr>
+                          </ng-template>
+                        
+                          <!-- Table Summary -->
+                          <ng-template pTemplate="summary">
+                            <div class="d-flex align-items-center justify-content-between">
+                              Total de registros: {{ results ? results.length : 0 }}
+                            </div>
+                          </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

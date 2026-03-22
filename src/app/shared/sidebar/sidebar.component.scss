@@ -1,0 +1,17 @@
+.menuleft {
+  color: white !important;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    color: white !important;
+  }
+}
+
+.sidebar-item.active>a,
+.sidebar-item.active>a:hover,
+.submenu .sidebar-item.active>a,
+.submenu .sidebar-item.active>a:hover,
+.menuleft.active {
+  color: white !important;
+}

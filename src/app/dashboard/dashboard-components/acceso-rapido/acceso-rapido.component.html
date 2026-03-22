@@ -1,0 +1,17 @@
+<p-divider></p-divider>
+<h2 class="logo-centered">Accesos rápidos</h2>
+<div class="quick-access-container">
+  <div class="quick-access">
+    <div class="m-2" *ngFor="let item of quickAccessItems">
+      <div class="card shadow estilo text-center" (click)="navigateTo(item.route)">
+        <div class="card-body">
+          <div class="icon-container">
+            <i class="{{ item.icon }}"></i>
+          </div>
+          <h6>{{ item.label }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-divider></p-divider>

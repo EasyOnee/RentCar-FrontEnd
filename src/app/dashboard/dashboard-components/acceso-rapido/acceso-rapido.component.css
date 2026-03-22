@@ -1,0 +1,96 @@
+.logo-centered {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.quick-access-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+}
+
+.quick-access {
+  display: flex;
+  gap: 5px;
+  padding: 0 10px;
+}
+
+.card {
+  min-width: 120px;
+  max-width: 120px;
+  height: 120px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: box-shadow 0.3s, transform 0.3s;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-container {
+  font-size: 30px;
+  /* Tamaño del icono */
+  margin-bottom: 5px;
+  color: #EF4444;
+  /* Color del icono */
+}
+
+h6 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 1200px) {
+  .card {
+    min-width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 992px) {
+  .card {
+    min-width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-width: 90px;
+    height: 90px;
+  }
+}

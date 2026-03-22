@@ -1,0 +1,228 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="page-breadcrumb">
+                <div class="d-md-flex align-items-center justify-content-between">
+                    <h3 class="page-title">Listado de Alquileres/Reservas</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Componente</a></li>
+                            <li class="breadcrumb-item active">Movimientos</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Toolbar -->
+                        <p-toolbar class="mb-4 gap-2" *ngIf="auth.hasRole(['SUPERADMIN', 'ADMIN'])">
+                            <ng-template pTemplate="left">
+                                <button pButton label="Añadir nuevo" icon="bi bi-plus" class="p-button-success me-2" routerLink="/component/reservas/new"></button>
+                              </ng-template>
+                            
+                            <ng-template pTemplate="right">
+                                <button pButton pRipple label="Exportar CSV" icon="bi bi-download" class="p-button-info" pTooltip="CSV"></button>
+                            </ng-template>
+                        </p-toolbar>
+
+                        <!-- Indicador de estado de vehículos -->
+                        <p-toolbar class="mb-4 gap-2" *ngIf="auth.hasRole(['SUPERADMIN', 'ADMIN'])">
+                          <span class="status-item">
+                              <span class="status-dot bg-success"></span> FINALIZADA
+                          </span>
+                          <span class="status-item">
+                              <span class="status-dot bg-danger"></span> ANULADA
+                          </span>
+                          <span class="status-item">
+                            <span class="status-dot activa-dot"></span> ACTIVA
+                          </span>
+                          <span class="status-item">
+                            <span class="status-dot bg-warning"></span> PENDIENTE A LIBERAR
+                          </span>
+                        </p-toolbar>
+                        
+                        <!-- Table -->
+                        <p-table #dt [columns]="cols" [value]="results" [paginator]="true" [rows]="10" [rowHover]="true"
+                          [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+                          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas">
+                        
+                          <!-- Table Caption -->
+                          <ng-template pTemplate="caption">
+                            <div class="d-flex align-items-center justify-content-between">
+                              <div class="input-group">
+                                <span class="input-group-text">
+                                  <i class="bi bi-search"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Buscar..."
+                                  (input)="dt.filterGlobal($any($event.target).value, 'contains')" />
+                              </div>
+                            </div>
+                          </ng-template>
+                        
+                          <!-- Table Header -->
+                          <ng-template pTemplate="header" let-columns>
+                            <tr class="text-start text-muted fw-bolder fs-8 text-uppercase gs-0">
+                              <th>
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                              </th>
+                              <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
+                                {{ col.header }} <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+                              </th>
+                              <th>Acciones</th>
+                            </tr>
+                          </ng-template>
+                        
+                          <!-- Table Body -->
+                          <ng-template pTemplate="body" let-result let-index="rowIndex">
+                            <!-- Si el rol del usuario es AGENTE, solo mostrar las reservas PENDIENTES -->
+                            <ng-container *ngIf="currentUser.role === 'AGENTE' && result.estado === 'PENDIENTE'">
+                              <tr [ngClass]="{
+                                    'pendiente': result.estado === 'PENDIENTE',
+                                    'activa': result.estado === 'ACTIVA',
+                                    'finalizada': result.estado === 'FINALIZADA',
+                                    'cancelada': result.estado === 'CANCELADA'
+                                  }" [pSelectableRow]="result.id">
+                                <td>
+                                  <p-tableCheckbox [value]="result"></p-tableCheckbox>
+                                </td>
+                                <td>{{ result.cliente }}</td>
+                                <td>{{ result.createdAt }}</td>
+                                <td><span class="p-badge" style="background-color: #f97316;">#{{ result.folio }}</span></td>
+                                <td>{{ result.fecha_salida }}</td>
+                                <td>{{ result.fecha_llegada }}</td>
+                                <td>
+                                  <span class="p-badge" [ngClass]="{
+                                      'p-badge-success': result.tipo_transaccion === 'ALQUILER',
+                                      'p-badge-primary': result.tipo_transaccion === 'PENDIENTE',
+                                    }">
+                                    {{ result.tipo_transaccion }}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div class="btn-group">
+                                    <button pButton pRipple label="Consultar" class="p-button-rounded p-button-success me-2"
+                                      (click)="openConsultaModal(result)" *ngIf="auth.hasRole(['SUPERADMIN', 'ADMIN'])"></button>
+                                    
+                                    <button pButton pRipple label="Liberar" class="p-button-rounded p-button-info me-2"
+                                      (click)="cambiarEstadoVehiculo(result.id, result.folio)" *ngIf="result.estado === 'PENDIENTE'">
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </ng-container>
+                        
+                            <!-- Si el rol del usuario NO es AGENTE, mostrar reservas que no están pendientes -->
+                            <ng-container *ngIf="currentUser.role !== 'AGENTE'">
+                              <tr [ngClass]="{
+                                    'pendiente': result.estado === 'PENDIENTE',
+                                    'activa': result.estado === 'ACTIVA',
+                                    'finalizada': result.estado === 'FINALIZADA',
+                                    'cancelada': result.estado === 'CANCELADA'
+                                  }" [pSelectableRow]="result.id">
+                                <td>
+                                  <p-tableCheckbox [value]="result"></p-tableCheckbox>
+                                </td>
+                                <td>{{ result.cliente }}</td>
+                                <td>{{ result.createdAt }}</td>
+                                <td><span class="p-badge" style="background-color: #f97316;">#{{ result.folio }}</span></td>
+                                <td>{{ result.fecha_salida }}</td>
+                                <td>{{ result.fecha_llegada }}</td>
+                                <td>
+                                  <span class="p-badge" [ngClass]="{
+                                      'p-badge-success': result.tipo_transaccion === 'ALQUILER',
+                                      'p-badge-primary': result.tipo_transaccion === 'PENDIENTE',
+                                    }">
+                                    {{ result.tipo_transaccion }}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div class="btn-group">
+                                    <button pButton pRipple label="Consultar" class="p-button-rounded p-button-success me-2"
+                                      (click)="openConsultaModal(result)" *ngIf="auth.hasRole(['SUPERADMIN', 'ADMIN'])"></button>
+                                    <button pButton pRipple label="Liberar" class="p-button-rounded p-button-info me-2"
+                                      (click)="cambiarEstadoVehiculo(result.id, result.folio)" *ngIf="result.estado === 'PENDIENTE'">
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </ng-container>
+                        
+                          </ng-template>
+                        
+                          <!-- Table Summary -->
+                          <ng-template pTemplate="summary">
+                            <div class="d-flex align-items-center justify-content-between">
+                              Total de registros: {{ results ? results.length : 0 }}
+                            </div>
+                          </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [ngClass]="{'modal-blur': showConsultaModal}">
+  <p-dialog header="Consulta de reservación" [(visible)]="showConsultaModal" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [closable]="false" >
+
+    <div *ngIf="selectedReserva" class="p-3">
+      <!-- Folio y Fecha de Solicitud -->
+      <div class="d-flex justify-content-between mb-4 border-bottom pb-2">
+        <p><strong>Folio:</strong> #{{ selectedReserva.folio }}</p>
+        <p><strong>Fecha de solicitud:</strong> {{ selectedReserva.createdAt }}</p>
+      </div>
+
+      <!-- Información del Cliente -->
+      <div class="mb-3">
+        <h5 class="fw-bold">Información del cliente <i class="bi bi-person"></i></h5>
+        <p><strong>Nombre:</strong> {{ selectedReserva.cliente?.nombre }} {{ selectedReserva.cliente?.paterno }} {{ selectedReserva.cliente?.materno }}</p>
+        <p><strong>Teléfono de contacto:</strong> {{ selectedReserva.cliente?.telefono }}</p>
+      </div>
+
+      <p-divider></p-divider>
+
+      <div class="mb-3">
+        <h5 class="fw-bold">Detalles de la reservación <i class="bi bi-calendar"></i></h5>
+        <div class="d-flex justify-content-between">
+          <div>
+            <p><strong>Vehículo:</strong>&nbsp;<a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" (click)="showSeriePlaca(selectedReserva)">{{ selectedReserva.vehiculo.marca }} {{ selectedReserva.vehiculo.modelo }} {{ selectedReserva.vehiculo.ano }}</a></p>
+            <p><strong>Salida:</strong> {{ selectedReserva.fecha_salida }}</p>
+            <p><strong>Llegada:</strong> {{ selectedReserva.fecha_llegada }}</p>
+            <p><strong>Destino:</strong> {{ selectedReserva.destino }}</p>
+            <p><strong>Estado de la reserva:</strong> {{ selectedReserva.estado }}</p>
+            <!-- Mostrar el asunto de cancelación solo si la reserva está cancelada -->
+            <ng-container *ngIf="selectedReserva.estado === 'CANCELADA'">
+              <p><strong>Asunto de cancelación:</strong> {{ selectedReserva.anularReserva }}</p>
+            </ng-container>
+            <p><strong>Días de renta:</strong> {{ selectedReserva.diasRenta }} día(s)</p>
+          </div>
+          <div>
+            <p><strong>Depósito:</strong> ${{ selectedReserva.deposito }} MXN</p>
+            <p><strong>Método de pago:</strong> {{ selectedReserva.formaPagoDeposito }}</p>
+            <p><strong>Total Renta:</strong> ${{ selectedReserva.totalRenta }} MXN</p>
+            <p><strong>Método de pago:</strong> {{ selectedReserva.formaPagoRenta }}</p>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- Responsable de la Solicitud -->
+      <div class="mt-3 border-top pt-2">
+        <p><strong>Responsable de la solicitud:</strong> {{ selectedReserva.agente?.name }}</p>
+      </div>
+    </div>
+
+    <p-footer>
+      <div class="d-flex flex-column flex-md-row justify-content-around">
+        <button pButton type="discard" label="Salir" icon="bi bi-backspace" class="p-button-danger w-md-auto" (click)="closeConsultaModal()"></button>
+        <button pButton type="button" label="Generar Recibo" icon="bi bi-file-earmark-text" class="p-button-primary mb-2 mb-md-0 me-md-2" (click)="generateRecibo()"></button>
+        <button pButton type="button" label="Generar Pagaré" icon="bi bi-file-earmark-medical" class="p-button-warning mb-2 mb-md-0 me-md-2" (click)="generatePagare()"></button>
+
+      </div>
+    </p-footer>
+  </p-dialog>
+</div>

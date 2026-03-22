@@ -1,0 +1,36 @@
+.dropdown-content {
+  position: absolute;
+  right: -20px;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff;
+  display: none;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+@media (max-width: 993px) {
+  .date-time {
+    display: none;
+  }
+
+  .user {
+    display: none;
+  }
+}
+
+.logout-menu {
+  display: none;
+}
+
+@media (max-width: 993px) {
+  .logout-menu {
+    display: block;
+  }
+}
+
+ul {
+  cursor: pointer;
+}

@@ -1,0 +1,38 @@
+.status-item {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.no_disponible {
+    background-color: #fff8cd;
+}
+
+.disponible {
+    background-color: #dcedc8;
+    /* Verde claro para disponible */
+}
+
+.alquilado {
+    background-color: #f3f6ae;
+    /* Amarillo claro para alquilado */
+}
+
+.reservado {
+    background-color: #ada2f5;
+    /* Morado para reservado */
+}
+
+.mantenimiento {
+    background-color: #ffcdd2;
+    /* Rojo claro para mantenimiento */
+}
+

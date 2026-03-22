@@ -1,0 +1,411 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page Header -->
+            <div class="page-breadcrumb">
+                <div class="d-md-flex align-items-center justify-content-between">
+                    <h3 class="page-title">Registro de vehículos</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Componente</a></li>
+                            <li class="breadcrumb-item active">Vehículos</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <form [formGroup]="form" (submit)="submit()">
+                        <div class="row">
+                            <!-- Left Column: Form -->
+                            <div class="col-md-6">
+                                <p-steps [(activeIndex)]="activeIndex" [model]="items" class="mb-4"></p-steps>
+
+                                <!-- Step 1: Datos Básicos -->
+                                <div *ngIf="activeIndex === 0">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="marca_id" class="form-label">Marca</label>
+                                            <select class="form-select" formControlName="marca_id" id="marca_id">
+                                                <option value="" disabled selected>Seleccione...</option>
+                                                <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.nombre }}</option>
+                                            </select>
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.marca_id.touched && form.controls.marca_id.hasError('required')">
+                                                    Marca es requerida
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="modelo_id" class="form-label">Modelo</label>
+                                            <select class="form-select" formControlName="modelo_id" id="modelo_id">
+                                                <option value="" disabled selected>Seleccione...</option>
+                                                <option *ngFor="let model of models" [value]="model.id">{{ model.nombre }}</option>
+                                            </select>
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.modelo_id.touched && form.controls.modelo_id.hasError('required')">
+                                                    Modelo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="deposito" class="form-label">Depósito</label>
+                                            <input type="number" class="form-control" formControlName="deposito" id="deposito" appCurrencyFormatter>
+                                            
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.deposito.touched && form.controls.deposito.hasError('required')">
+                                                    Depósito es requerido
+                                                </div>
+
+                                                <div *ngIf="form.controls.deposito.touched && form.controls.deposito.hasError('pattern')">
+                                                    Depósito debe ser un número con hasta 10 dígitos y 2 decimales
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="color" class="form-label">Color</label>
+                                            <input type="text" class="form-control" formControlName="color" id="color" placeholder="Ej. Rojo, Blanco o Azul">
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.color.touched && form.controls.color.hasError('required')">
+                                                    Color es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <button pButton class="p-button-primary" icon="bi bi-arrow-right" (click)="onNext()"></button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Detalles del Vehículo -->
+                                <div *ngIf="activeIndex === 1">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="num_serie" class="form-label">Número de serie</label>
+                                            <input type="text" class="form-control" formControlName="num_serie" id="num_serie" placeholder="Ej. 1HGCM82633A000000">
+                                            
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.num_serie.touched && form.controls.num_serie.hasError('required')">
+                                                    Número de serie es requerido
+                                                </div>
+
+                                                <div *ngIf="form.controls.num_serie.touched && form.controls.num_serie.hasError('minlength')">
+                                                    Número de serie debe tener al menos 17 caracteres
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="placa" class="form-label">Placa</label>
+                                            <input type="text" class="form-control" formControlName="placa" id="placa" placeholder="Ej. ABC-123">
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.placa.touched && form.controls.placa.hasError('required')">
+                                                    Placa es requerida
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="kms" class="form-label">Kilómetros</label>
+                                            <input type="text" class="form-control" formControlName="kms" id="kms" placeholder="Ej. 10000">
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.kms.touched && form.controls.kms.hasError('required')">
+                                                    Kilómetros es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <label for="ano" class="form-label">Año</label>
+                                            <input type="text" class="form-control" formControlName="ano" id="ano" placeholder="Ej. 2021">
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.ano.touched && form.controls.ano.hasError('required')">
+                                                    Año es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <button pButton class="p-button-secondary me-2" icon="bi bi-arrow-left" (click)="onPrev()"></button>
+                                        <button pButton class="p-button-primary" icon="bi bi-arrow-right" (click)="onNext()"></button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Detalles 2 -->
+                                <div *ngIf="activeIndex === 2">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="cilindros" class="form-label">Cilindros</label>
+                                            <input type="text" class="form-control" formControlName="cilindros" id="cilindros" placeholder="Ej. 4, 6 o 8">
+                                        
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.cilindros.touched && form.controls.cilindros.hasError('required')">
+                                                    Cilindros es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="estado" class="form-label">Estado</label>
+                                            <select class="form-select" formControlName="estado" id="estado">
+                                                <option value="" disabled selected>Seleccione...</option>
+                                                <option value="DISPONIBLE">Disponible</option>
+                                                <option value="NO_DISPONIBLE">No disponible</option>
+                                                <option value="MANTENIMIENTO">En mantenimiento</option>
+                                                <option value="REPARACION">En reparación</option>
+                                                <option value="RESERVADO">Reservado</option>
+                                                <option value="ALQUILADO">Alquilado</option>
+                                            </select>
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.estado.touched && form.controls.estado.hasError('required')">
+                                                    Estado es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="combustible" class="form-label">Combustible</label>
+                                            <select class="form-select" formControlName="combustible" id="combustible">
+                                                <option value="" disabled selected>Seleccione...</option>
+                                                <option value="GASOLINA">Gasolina</option>
+                                                <option value="DIESEL">Diesel</option>
+                                                <option value="GAS">Gas</option>
+                                                <option value="HIBRIDO">Híbrido</option>
+                                                <option value="ELECTRICO">Eléctrico</option>
+                                                <option value="OTRO">Otro</option>
+                                            </select>
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.combustible.touched && form.controls.combustible.hasError('required')">
+                                                    Combustible es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <label for="tipo_id" class="form-label">Tipo de vehículo</label>
+                                            <select class="form-select" formControlName="tipo_id" id="tipo_id">
+                                                <option value="" disabled selected>Seleccione...</option>
+                                                <option *ngFor="let type of types" [value]="type.id">{{ type.nombre }}</option>
+                                            </select>
+
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.tipo_id.touched && form.controls.tipo_id.hasError('required')">
+                                                    Tipo de vehículo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-end">
+                                        <button pButton class="p-button-secondary me-2" icon="bi bi-arrow-left" (click)="onPrev()"></button>
+                                        <button pButton class="p-button-primary" icon="bi bi-arrow-right" (click)="onNext()"></button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Detalles 3 -->
+                                <div *ngIf="activeIndex === 3">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="tarifa_diaria" class="form-label">Tarifa diaria</label>
+                                            <input type="number" class="form-control" formControlName="tarifa_diaria" id="tarifa_diaria" appCurrencyFormatter>
+                                            
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.tarifa_diaria.touched && form.controls.tarifa_diaria.hasError('required')">
+                                                    Tarifa diaria es requerida
+                                                </div>
+
+                                                <div *ngIf="form.controls.tarifa_diaria.touched && form.controls.tarifa_diaria.hasError('pattern')">
+                                                    Tarifa diaria debe ser un número con hasta 10 dígitos y 2 decimales
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="dia_adicional" class="form-label">Día adicional</label>
+                                            <input type="number" class="form-control" formControlName="dia_adicional" id="dia_adicional" appCurrencyFormatter>
+                                        
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.dia_adicional.touched && form.controls.dia_adicional.hasError('required')">
+                                                    Día adicional es requerida
+                                                </div>
+
+                                                <div *ngIf="form.controls.dia_adicional.touched && form.controls.dia_adicional.hasError('pattern')">
+                                                    Día adicional debe ser un número con hasta 10 dígitos y 2 decimales
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="hora_adicional" class="form-label">Hora adicional</label>
+                                            <input type="number" class="form-control" formControlName="hora_adicional" id="hora_adicional" appCurrencyFormatter>
+                                        
+                                            <div class="fv-plugins-message-container invalid-feedback">
+                                                <div *ngIf="form.controls.hora_adicional.touched && form.controls.hora_adicional.hasError('required')">
+                                                    Hora adicional es requerida
+                                                </div>
+
+                                                <div *ngIf="form.controls.hora_adicional.touched && form.controls.hora_adicional.hasError('pattern')">
+                                                    Hora adicional debe ser un número con hasta 10 dígitos y 2 decimales
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-end">
+                                        <button pButton class="p-button-secondary me-2" icon="bi bi-arrow-left" (click)="onPrev()"></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Divider Line -->
+                            <div class="col-md-1 d-flex justify-content-center align-items-center">
+                                <div class="vr"></div>
+                            </div>
+
+                            <!-- Right Column: Image Upload -->
+                            <!-- <div class="col-md-5">
+                                <div class="image-upload-wrapper">
+                                    <label for="foto" class="form-label">Agregar fotografía</label>
+                                    
+                                    <input type="file" class="form-control" id="foto" accept="image/*" (change)="onFileSelected($event)">
+                                    
+                                    <div class="image-preview mt-2" *ngIf="imageUrl">
+                                        <img [src]="imageUrl" alt="Fotografía del Vehículo"
+                                            class="img-thumbnail fixed-size">
+                                        
+                                        <a href="javascript:void(0)" class="btn btn-danger mt-2"
+                                            (click)="removeImage()">Quitar</a>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="col-md-5">
+                                <div class="row">
+                                    <div class="col-lg-12 fv-row fv-plugins-icon-container">
+                                        <div *ngIf="editVehiculo" class="scaleImagen">
+                                            <img
+                                                [src]="imageUrl"
+                                                class="imagen"
+                                                *ngIf="imageUrl"
+                                            />
+
+                                            <input
+                                                class="btn btn-danger text-uppercase"
+                                                style="margin: 20px;"
+                                                (click)="deleteImage()"
+                                                type="button"
+                                                value="Eliminar foto"
+                                                *ngIf="imageUrl"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <div *ngIf="!imageUrl">
+                                                <input
+                                                    class="inputImg"
+                                                    (change)="selectFile($event)"
+                                                    *ngIf="!imageSelected"
+                                                    type="file"
+                                                    formControlName="foto"
+                                                    name="foto"
+                                                />
+                                            </div>
+
+                                            <div *ngIf="previsualizacion && !imageUrl">
+                                                <img
+                                                    style="width: 150px; height: 150px;"
+                                                    [src]="previsualizacion"
+                                                />
+                                            </div>
+
+                                            <br>
+
+                                            <input
+                                                class="btn btn-primary text-uppercase"
+                                                *ngIf="!fileSelected && !imageUrl"
+                                                (click)="checkPermissions()"
+                                                type="button"
+                                                value="Tomar foto"
+                                            />
+
+                                            <p *ngIf="status && !imageUrl">
+                                                Estado: {{ status }}
+                                            </p>
+                                        </div>
+
+                                        <div *ngIf="stream" class="d-flex flex-column align-items-center" style="height: auto; width: 100%;">
+                                            <webcam
+                                                [height]="190"
+                                                [trigger]="$trigger"
+                                                (imageCapture)="snapshot($event)"
+                                                [imageQuality]="1"
+                                                class="p-image-responsive"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <input
+                                                *ngIf="stream"
+                                                class="btn btn-danger text-uppercase"
+                                                (click)="captureImage()"
+                                                type="button"
+                                                value="Capturar"
+                                            />
+                                        </div>
+
+                                        <br>
+
+                                        <div *ngIf="previewImage" class="d-flex flex-column">
+                                            <h3 class="text-info text-center">
+                                                &mdash; PREVIEW &mdash;
+                                            </h3>
+                                            
+                                            <img class="preview img-fluid" [src]="previewImage">
+                                        </div>
+
+                                        <div class="fv-plugins-message-container invalid-feedback">
+                                            <div *ngIf="form.controls.foto.touched && form.controls.foto.hasError('required')">
+                                                Foto is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p-divider></p-divider>
+
+                        <div class="row mt-4">
+                            <div class="col-12 text-end">
+                                <button pButton label="Descartar" class="p-button-secondary me-2" routerLink="/component/vehiculos/list"></button>
+                                <button pButton label="Guardar" class="p-button-primary" icon="bi bi-save"></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
