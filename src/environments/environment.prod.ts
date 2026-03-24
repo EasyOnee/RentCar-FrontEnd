@@ -1,5 +1,4 @@
 export const environment = {
-  baseUrl: '//rentauto-dced6.web.app',
   production: true,
-  url: "https://rentauto-backend-production.up.railway.app"
+  baseUrl: 'https://rentauto-backend-production.up.railway.app/'
 };
