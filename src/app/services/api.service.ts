@@ -23,7 +23,7 @@ export class ApiService {
   }
 
   get(data: string) {
-    return this.http.get(environment.url + data, this.http_header());
+    return this.http.get(environment.baseUrl + data, this.http_header());
   }
 
   post(data: string, body: any) {
@@ -32,10 +32,10 @@ export class ApiService {
       const headers = new HttpHeaders({
         Authorization: localStorage.getItem('access_token') as string,
       });
-      return this.http.post(environment.url + data, body, { headers });
+      return this.http.post(environment.baseUrl + data, body, { headers });
     } else {
       // Para otros tipos de datos, utiliza los encabezados completos
-      return this.http.post(environment.url + data, body, this.http_header());
+      return this.http.post(environment.baseUrl + data, body, this.http_header());
     }
   }
 
@@ -45,14 +45,14 @@ export class ApiService {
       const headers = new HttpHeaders({
         Authorization: localStorage.getItem('access_token') as string,
       });
-      return this.http.put(environment.url + data, body, { headers });
+      return this.http.put(environment.baseUrl + data, body, { headers });
     } else {
-      return this.http.put(environment.url + data, body, this.http_header());
+      return this.http.put(environment.baseUrl + data, body, this.http_header());
     }
   }
 
   delete(data: string) {
-    return this.http.delete(environment.url + data, this.http_header());
+    return this.http.delete(environment.baseUrl + data, this.http_header());
   }
 
   post_(data: string, body: any) {
@@ -61,7 +61,7 @@ export class ApiService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post(environment.url + data, body, options);
+    return this.http.post(environment.baseUrl + data, body, options);
   }
 
   post__(data: string, body: any) {

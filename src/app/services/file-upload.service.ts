@@ -21,7 +21,7 @@ export class FileUploadService {
     formData.append('file', file);
     const req = new HttpRequest(
       'POST',
-      `${environment.url}file/photo`,
+      `${environment.baseUrl}file/photo`,
       formData,
       {
         reportProgress: true,
