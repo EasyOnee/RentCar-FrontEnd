@@ -48,7 +48,7 @@ export class FileUploadService {
     const params = { 'id': id.toString() };
 
     return from(
-      axios.post(`${environment.url}file/photo`, formData, { headers, params })
+      axios.post(`${environment.baseUrl}file/photo`, formData, { headers, params })
     ).pipe(
       map((response) => {
         const data = response.data;
@@ -76,7 +76,7 @@ export class FileUploadService {
     }
 
     return from(
-      axios.post(`${environment.url}file/photo`, formData, { headers })
+      axios.post(`${environment.baseUrl}file/photo`, formData, { headers })
     ).pipe(
       map((response) => {
         const data = response.data;
@@ -108,7 +108,7 @@ export class FileUploadService {
       Authorization: `Bearer ${token}` // Añade 'Bearer ' si es necesario
     });
   
-    return this.http.get(`${environment.url}file/image/${fileName}`, {
+    return this.http.get(`${environment.baseUrl}file/image/${fileName}`, {
       headers,
       responseType: 'blob' // Indica que se espera una respuesta binaria (blob)
     }).pipe(
@@ -121,7 +121,7 @@ export class FileUploadService {
 
   // Returns the list of files
   getFiles(): Observable<any> {
-    return this.http.get(`${environment.url}auth/users/files`);
+    return this.http.get(`${environment.baseUrl}auth/users/files`);
   }
 
 }
